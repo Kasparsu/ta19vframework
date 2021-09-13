@@ -8,9 +8,10 @@
 <body>
     Home page <?php echo $name ?>
 
-    <form action="/" method="POST">
+    <form action="/" method="POST" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="name">
         <input type="text" name="age" placeholder="age">
+        <input type="file" name="image">
         <input type="submit">
     </form>
 </body>
