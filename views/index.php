@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<?php require 'partials/header.php'?>
     Home page <?php echo $name ?>
 
     <form action="/" method="POST" enctype="multipart/form-data">
-        <input type="text" name="name" placeholder="name">
-        <input type="text" name="age" placeholder="age">
         <input type="file" name="image">
         <input type="submit">
     </form>
-</body>
-</html>
+    <?php if(!isset($_SESSION['isLoggedIn'])): ?>
+        <form action="/login?username=kaspar" method="POST">
+            <input type="text" name="username">
+            <input type="password" name="password">
+            <input type="submit">
+        </form>
+    <?php else: ?>
+        <a href="/logout">Logout</a>
+    <?php endif; ?>
+<?php require 'partials/footer.php'?>

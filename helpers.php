@@ -1,6 +1,6 @@
 <?php
 
-function view($viewName, $vars){
+function view($viewName, $vars = []){
     extract($vars);
     require __DIR__ . "/views/$viewName.php";
 }

@@ -6,7 +6,8 @@
     // });
 
     Router::get('/', [HomeController::class, 'index']);  // '\App\Controllers\HomeController' 
-    Router::post('/', [HomeController::class, 'post']);
+    Router::post('/', [HomeController::class, 'upload']);
     Router::get('/posts', [HomeController::class, 'posts']);
-
     Router::get('/about', [HomeController::class, 'about']);
+    Router::post('/login', [HomeController::class, 'login']);
+    Router::get('/logout', [HomeController::class, 'logout']);
