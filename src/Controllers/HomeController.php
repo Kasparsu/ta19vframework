@@ -1,39 +1,27 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Article;
+use PDO;
+use PDOException;
+
 class HomeController {
     public function index(){
-        $name = 'kaspar';
-        view('index', compact('name'));
-    }
+        try {
+            $conn = new PDO('sqlite:' . __DIR__ . '/../../db.sqlite');
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    public function upload(){
-        move_uploaded_file(
-            $_FILES['image']['tmp_name'],
-            __DIR__ . '/../../public/uploads/' . $_FILES['image']['name']
-        );
-        header('Location: /');
-    }
-    
-    public function login(){
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        if($username === 'user' && $password === 'pass'){
-            $_SESSION['isLoggedIn'] = true;
+            $stmt = $conn->prepare("SELECT * FROM articles");
+            $stmt->execute();
+
+            // set the resulting array to associative
+            $stmt->setFetchMode(PDO::FETCH_CLASS, Article::class);
+            $results = $stmt->fetchAll();
+            var_dump($results);
+            var_dump($results[0]->getCapitalizedTitle());
+        } catch(PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
         }
-        header('Location: /');
-    }
-    
-    public function logout(){
-        unset($_SESSION['isLoggedIn']);
-        header('Location: /');
-    }
-
-    public function about(){
-       
-        view('about');
-    }
-    public function posts(){
-        view('posts');
     }
 }
