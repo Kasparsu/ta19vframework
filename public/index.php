@@ -2,17 +2,17 @@
 
 //require "src/Animal.php";
 
-spl_autoload_register(function($class){
-    $parts = explode('\\', $class);
-    unset($parts[0]);
-    $path = implode('\\', $parts) . '.php';
-    require __DIR__ . '\\..\\src\\' . $path;
-});
+require __DIR__ . '\\..\\vendor\\autoload.php';
 
 session_start();
 
 require __DIR__ . '\\..\\routes.php';
 require __DIR__ . '\\..\\helpers.php';
+
+$altorouter = new AltoRouter();
+$altorouter->map( 'GET', '/', 'HomeController#index');
+$match = $altorouter->match();
+var_dump($match);
 
 $router = new \App\Router($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
 $match = $router->match();
